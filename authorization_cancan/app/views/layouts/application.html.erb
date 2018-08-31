@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Latihan</title>
+    <%= csrf_meta_tags %>
+
+    <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <%= stylesheet_link_tag 'main' %>
+    <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+    <%= javascript_include_tag 'main' %>
+
+  </head>
+  <body> 
+    <nav class="navbar navbar-dark bg-dark">
+      <div class="container">
+        <div class="navbar-header">
+          <%= link_to 'Latihan', root_path, class: 'navbar-brand' %>
+        </div>
+        <div id="navbar">
+          <ul class="nav navbar-nav">
+          </ul>
+
+          <ul class="nav navbar-nav pull-right">
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" aria-expanded="false" role="button" data-toggle="dropdown" href="#">
+                Role
+                <span class="caret"></span>
+              </a>
+               <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                <li class="nav-item dropdown">
+
+                <% User::ROLES.each do |k, v| %>
+                  
+                    <%= link_to session_path(k), method: :patch do %>
+                      <%= v %>
+                      <% if v == current_user.role %>
+                        <small class="text-muted">(current)</small>
+                      <% end %>
+                    <% end %>
+                <% end %>
+                </li>
+              </div>
+              
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <div class="container">
+      <% flash.each do |key, value| %>
+        <div class="alert alert-<%= key %>">
+          <%= value %>
+        </div>
+      <% end %>
+    <%= yield %>
+  </body>
+</html>
